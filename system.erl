@@ -8,53 +8,6 @@ etop() ->
 etop(Time,Line,Type) ->
     spawn(fun() -> etop:start([{output, text}, {interval, Time}, {lines, Line}, {sort, Type}]) end).
 
-tc_all() ->
-    [{tc,tc_sup()},
-     {line,tc_line()},
-     {dot,tc_dot()},
-     {player,tc_player()},
-     {server,tc_server()},
-     {manager,tc_manager()},
-     {server,tc_server()},
-     {message,tc_message()},
-     {rank,tc_rank()},
-     {fight,tc_fight()},
-     {event,tc_event()},
-     {mission,tc_mission()}].
-
-tc_sup() ->
-    supervisor:count_children(tc_sup).
-
-tc_manager() ->
-    supervisor:count_children(tc_battle_manager_sup).
-
-tc_line() ->
-    supervisor:count_children(tc_battle_line_sup).
-
-tc_dot() ->
-    supervisor:count_children(tc_battle_dot_sup).
-
-tc_player() ->
-    supervisor:count_children(tc_player_sup).
-
-tc_server() ->
-    supervisor:count_children(tc_server_sup).
-
-tc_message() ->
-    supervisor:count_children(tc_message_sup).
-
-tc_rank() ->
-    supervisor:count_children(tc_rank_sup).
-
-tc_event() ->
-    supervisor:count_children(tc_event_sup).
-
-tc_fight() ->
-    supervisor:count_children(tc_fight_sup).
-
-tc_mission() ->
-    supervisor:count_children(tc_mission_sup).
-
 
 sup(SupRef) ->
     supervisor:which_children(SupRef).
@@ -77,7 +30,7 @@ filter_msg([P|List],List2,InfoName) ->
                 [{P,
                   erlang:process_info(P, registered_name),
                   Info
-                 }|List2] 	 
+                 }|List2] 	
         end,
     filter_msg(List,NewList,InfoName).
 
@@ -102,7 +55,7 @@ filter_msg2([P|List],List2,InfoName) ->
                   Info,
                   erlang:process_info(P, messages),
                   erlang:process_info(P, current_function)
-                 }|List2] 	 
+                 }|List2] 	
         end,
     filter_msg2(List,NewList,InfoName).
 
@@ -137,7 +90,7 @@ than_value(InfoName, Value) ->
                           if VV >  Value -> true;
                              true -> false
                           end;
-                      _ -> true 	
+                      _ -> true
                   end
           end, PList ),
     ZZList =
@@ -215,7 +168,7 @@ filter_port([P|List],List2,InfoName) ->
                   Num
                  }|List2];
             _ ->
-                List2   
+                List2
         end,
     filter_port(List,NewList,InfoName).
 
